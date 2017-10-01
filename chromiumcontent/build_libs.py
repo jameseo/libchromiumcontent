@@ -137,6 +137,8 @@ with open(args.out, 'w') as out:
             "components/leveldb",
             "components/link_header_util",
             "components/memory_coordinator",
+            "components/metrics/public/interfaces",
+            "components/metrics/single_sample_metrics",
             "components/mime_util",
             "components/mus/clipboard",
             "components/mus/common",
@@ -144,6 +146,7 @@ with open(args.out, 'w') as out:
             "components/mus/gpu",
             "components/mus/input_devices",
             "components/mus/public",
+            "components/network_session_configurator/common",
             "components/os_crypt",
             "components/payments",
             "components/prefs",
@@ -156,7 +159,11 @@ with open(args.out, 'w') as out:
             "components/tracing/tracing",
             "components/url_formatter",
             "components/variations",
-            "components/viz/frame_sinks/frame_sinks",
+            "components/viz/client",
+            "components/viz/common",
+            "components/viz/hit_test",
+            "components/viz/host",
+            "components/viz/service/service",
             "components/webcrypto",
             "components/webmessaging",
         ])
@@ -200,12 +207,16 @@ with open(args.out, 'w') as out:
             "services/data_decoder",
             "services/device",
             "services/file",
+            "services/metrics/public",
             "services/resource_coordinator",
+            "services/service_manager/background",
             "services/service_manager/embedder",
-            "services/service_manager/public/cpp/sources",
+            "services/service_manager/public/cpp/cpp",
+            "services/service_manager/public/cpp/cpp_types",
             "services/service_manager/public/interfaces",
             "services/service_manager/runner",
             "services/service_manager/service_manager",
+            "services/service_manager/standalone",
             "services/shape_detection",
             "services/shell/public",
             "services/shell/runner",
@@ -214,6 +225,8 @@ with open(args.out, 'w') as out:
             "services/ui/public",
             "services/ui/gpu",
             "services/user",
+            "services/video_capture",
+            "services/viz/hit_test/public/interfaces",
         ] + additional_services)
 
     gen_list(
@@ -253,14 +266,14 @@ with open(args.out, 'w') as out:
         [
             "third_party/WebKit/public",
             "third_party/WebKit/Source/core",
+            "third_party/WebKit/Source/controller",
             "third_party/WebKit/Source/platform/heap",
             "third_party/WebKit/Source/platform/blink_common",
             "third_party/WebKit/Source/platform/loader",
             "third_party/WebKit/Source/platform/mojo",
             "third_party/WebKit/Source/platform/platform",
-            "third_party/WebKit/Source/platform/wtf/platform_wtf",
+            "third_party/WebKit/Source/platform/wtf",
             "third_party/WebKit/Source/web",
-            "third_party/WebKit/Source/wtf",
         ])
 
     gen_list(
