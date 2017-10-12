@@ -1,0 +1,33 @@
+diff --git a/base/win/wrapped_window_proc.h b/base/win/wrapped_window_proc.h
+index 80ec345e4641..b6c7d497dded 100644
+--- a/base/win/wrapped_window_proc.h
++++ b/base/win/wrapped_window_proc.h
+@@ -51,6 +51,16 @@ BASE_EXPORT void InitializeWindowClass(
+     HICON small_icon,
+     WNDCLASSEX* class_out);
+ 
++template <WNDPROC proc>
++LRESULT CALLBACK
++WrappedWindowProcImpl(HWND hwnd, UINT message, WPARAM wparam, LPARAM lparam)
++{
++    tracked_objects::ScopedProfile scoped_profile(
++        FROM_HERE, tracked_objects::ScopedProfile::ENABLED);
++
++    return proc(hwnd, message, wparam, lparam);
++}
++
+ // Wrapper that supplies a standard exception frame for the provided WindowProc.
+ // The normal usage is something like this:
+ //
+@@ -74,10 +84,7 @@ LRESULT CALLBACK
+ WrappedWindowProc(HWND hwnd, UINT message, WPARAM wparam, LPARAM lparam) {
+   LRESULT rv = 0;
+   __try {
+-    tracked_objects::ScopedProfile scoped_profile(
+-        FROM_HERE, tracked_objects::ScopedProfile::ENABLED);
+-
+-    rv = proc(hwnd, message, wparam, lparam);
++    rv = WrappedWindowProcImpl<proc>(hwnd, message, wparam, lparam);
+   } __except(CallExceptionFilter(GetExceptionInformation())) {
+   }
+   return rv;
