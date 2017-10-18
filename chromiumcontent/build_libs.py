@@ -159,6 +159,7 @@ with open(args.out, 'w') as out:
             "components/tracing/tracing",
             "components/url_formatter",
             "components/variations",
+            "components/vector_icons",
             "components/viz/client",
             "components/viz/common",
             "components/viz/hit_test",
@@ -191,14 +192,14 @@ with open(args.out, 'w') as out:
         out,
         "obj_net",
         [
-            "net",
+            "net/base",
+            "net/constants",
+            "net/extras",
+            "net/http_server",
+            "net/net",
+            "net/net_with_v8",
         ])
 
-    additional_services = []
-    if sys.platform == 'darwin':
-        additional_services = [
-            "services/service_manager/public/cpp/standalone_service",
-        ]
     gen_list(
         out,
         "obj_services",
@@ -213,6 +214,7 @@ with open(args.out, 'w') as out:
             "services/service_manager/embedder",
             "services/service_manager/public/cpp/cpp",
             "services/service_manager/public/cpp/cpp_types",
+            "services/service_manager/public/cpp/standalone_service/standalone_service",
             "services/service_manager/public/interfaces",
             "services/service_manager/runner",
             "services/service_manager/service_manager",
@@ -227,7 +229,7 @@ with open(args.out, 'w') as out:
             "services/user",
             "services/video_capture",
             "services/viz/hit_test/public/interfaces",
-        ] + additional_services)
+        ])
 
     gen_list(
         out,
@@ -248,6 +250,8 @@ with open(args.out, 'w') as out:
             "third_party/angle/libGLESv2",
             "third_party/angle/preprocessor",
             "third_party/angle/src/third_party/libXNVCtrl",
+            "third_party/angle/src/vulkan_support/glslang",
+            "third_party/angle/src/vulkan_support/vulkan_loader",
             "third_party/angle/translator",
             "third_party/angle/translator_lib",
         ])
