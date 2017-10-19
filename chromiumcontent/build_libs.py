@@ -9,21 +9,19 @@ parser.add_argument('-s', dest='stamp')
 parser.add_argument('-t', dest='target_cpu')
 args = parser.parse_args()
 
+obj_roots = filter(os.path.isdir, [ 'obj', os.path.join('clang_x64', 'obj') ])
+
 def gen_list(out, name, obj_dirs):
     out.write(name + " = [\n")
     for base_dir in obj_dirs:
-        for dir, subdirs, files in os.walk(os.path.join('obj', base_dir)):
-            for f in files:
-                if f.endswith('.obj') or f.endswith('.o'):
-                    out.write('"' + os.path.abspath(os.path.join(dir, f)) + '",\n')
+        for root_dir in obj_roots:
+            for dir, subdirs, files in os.walk(os.path.join(root_dir, base_dir)):
+                for f in files:
+                    if f.endswith('.obj') or f.endswith('.o'):
+                        out.write('"' + os.path.abspath(os.path.join(dir, f)) + '",\n')
     out.write("]\n")
 
 with open(args.out, 'w') as out:
-    additional_libchromiumcontent = []
-    if sys.platform in ['win32', 'cygwin'] and args.target_cpu == "x64":
-        additional_libchromiumcontent = [
-            "../clang_x64/obj/third_party/libyuv",
-        ]
     gen_list(
         out,
         "obj_libchromiumcontent",
@@ -92,7 +90,7 @@ with open(args.out, 'w') as out:
             "tools",
             "ui",
             "url",
-        ] + additional_libchromiumcontent)
+        ])
 
     gen_list(
         out,
