@@ -6,3 +6,6 @@ enable_widevine = true
 proprietary_codecs = false
 is_component_ffmpeg = true
 ffmpeg_branding = "Chromium"
+
+# Always use the system provided standard library
+use_custom_libcxx = false
