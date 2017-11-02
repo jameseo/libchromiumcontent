@@ -19,18 +19,19 @@ index 2f9bc60236..ad8989be6a 100644
    V8_DEPRECATE_SOON("Use maybe version", Local<Value> Get(Local<Value> key));
    V8_WARN_UNUSED_RESULT MaybeLocal<Value> Get(Local<Context> context,
 diff --git a/src/api.cc b/src/api.cc
-index 10d44feeb0..9802a76dff 100644
+index 10d44feeb0..04770efcc9 100644
 --- a/src/api.cc
 +++ b/src/api.cc
-@@ -4504,6 +4504,22 @@ Maybe<bool> v8::Object::ForceSet(v8::Local<v8::Context> context,
+@@ -4504,6 +4504,23 @@ Maybe<bool> v8::Object::ForceSet(v8::Local<v8::Context> context,
    return Just(true);
  }
  
 +bool v8::Object::ForceSet(v8::Local<Value> key, v8::Local<Value> value,
 +                          v8::PropertyAttribute attribs) {
 +  i::Isolate* isolate = Utils::OpenHandle(this)->GetIsolate();
-+  PREPARE_FOR_EXECUTION_GENERIC(isolate, Local<Context>(), Object, ForceSet,
-+                                false, i::HandleScope, false);
++  PREPARE_FOR_EXECUTION(isolate->GetCurrentContext(), isolate, 
++                        Local<Context>(), Object, ForceSet,
++                        false, i::HandleScope, false);
 +  i::Handle<i::JSObject> self =
 +      i::Handle<i::JSObject>::cast(Utils::OpenHandle(this));
 +  i::Handle<i::Object> key_obj = Utils::OpenHandle(*key);
