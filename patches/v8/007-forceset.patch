@@ -1,3 +1,23 @@
+diff --git a/include/v8.h b/include/v8.h
+index 2f9bc60236..ad8989be6a 100644
+--- a/include/v8.h
++++ b/include/v8.h
+@@ -3097,9 +3097,12 @@ class V8_EXPORT Object : public Value {
+   //
+   // Note also that this only works for named properties.
+   V8_DEPRECATED("Use CreateDataProperty / DefineOwnProperty",
+-                Maybe<bool> ForceSet(Local<Context> context, Local<Value> key,
+-                                     Local<Value> value,
+-                                     PropertyAttribute attribs = None));
++                bool ForceSet(Local<Value> key, Local<Value> value,
++                              PropertyAttribute attribs = None));
++  V8_DEPRECATE_SOON("Use CreateDataProperty / DefineOwnProperty",
++                    Maybe<bool> ForceSet(Local<Context> context,
++                                         Local<Value> key, Local<Value> value,
++                                         PropertyAttribute attribs = None));
+ 
+   V8_DEPRECATE_SOON("Use maybe version", Local<Value> Get(Local<Value> key));
+   V8_WARN_UNUSED_RESULT MaybeLocal<Value> Get(Local<Context> context,
 diff --git a/src/api.cc b/src/api.cc
 index 10d44feeb0..9802a76dff 100644
 --- a/src/api.cc
